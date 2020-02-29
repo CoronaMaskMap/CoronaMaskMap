@@ -33,7 +33,7 @@
 			</style>
 		</head>
 
-		<body>
+		<body onload = "showData()">
 			<p>
 				<div class = "SeoulAbout">
 					<p style = "font-family: Tahoma, Geneva, sans-serif; font-size: 6vmin; color: #CACCD3; padding-top: 55vmin; padding-left: 2vmin;">
@@ -94,7 +94,7 @@
 				function addData()
 				{
 					alert("제출 되었습니다. 대단히 감사합니다. Successfully submitted. Thank you very much.")
-					localStorage.clear();
+					//localStorage.clear();
 					getData();
 
 					var VarAddress = document.getElementById('Address').value;
