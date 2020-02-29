@@ -1,0 +1,145 @@
+<!-- Copyright (C) 2020, CoronaMaskMap Team -->
+
+<!doctype html>
+
+<html>
+	<div id = "wrapper">
+		<head>
+			<title> Daegu-CoronaMaskMap </title>
+			<link href = "Styling.css" rel = "stylesheet" type = "text/css"/>
+
+			<style type = "text/css">
+				* 
+				{
+			        margin: 0;
+			        padding: 0;
+			        border: 0;
+			        outline: 0;
+			        font-size: 100%;
+			        vertical-align: baseline;
+	    		}
+				body
+				{
+					-webkit-text-size-adjust: auto;
+					margin: 0;
+					background: white;
+					background-repeat: no-repeat;
+					background-size: cover;
+					text-size-adjust: none;
+				}
+				.SeoulAbout {background: #223A8F; padding-bottom: 3vmin; background-size: cover; width: 100%; height: auto;}
+				.EnterInfo {background: #303FB6; padding-bottom: 3vmin; background-size: cover; width: 100%; height: auto;}
+				.Update {background: #3F53EF; padding-bottom: 3vmin; background-size: cover; width: 100%; height: auto;}
+			</style>
+		</head>
+
+		<body onload = "showData()">
+			<p>
+				<div class = "SeoulAbout">
+					<p style = "font-family: Tahoma, Geneva, sans-serif; font-size: 6vmin; color: #CACCD3; padding-top: 55vmin; padding-left: 2vmin;">
+						<Strong> 대구 </Strong> Daegu 
+					</p>
+					<p style = "font-family: Tahoma, Geneva, sans-serif; font-size: 4.3vmin; color: white; padding-top: 0vmin; padding-left: 2vmin;">
+						<span style = "color: #5D6D7E;">확진자 Confirmed: 2055 <br> 검사중 Check In-Progress: N/A <br> 사망자 Death: N/A <br> 
+						마지막 업데이트 Last Update: 11:00 am 02/29/2020 </span>
+					</p>
+				</div>
+				<div class = "EnterInfo">
+					<p style = "font-family: Tahoma, Geneva, sans-serif; font-size: 5vmin; color: #CACCD3; padding-top: 2vmin; padding-left: 1vmin;">
+						<strong> 마스크 판매 하는 곳 <span style = "color: #CA768E;">제보</span>하기 <span style = "color: #CA768E;">Report</span> Facility With Face Mask in Stock </strong>
+					</p>
+					<p style = "font-family: Tahoma, Geneva, sans-serif; font-size: 3vmin; color :#B3B3AF; padding-top: 2vmin; padding-left: 1vmin;">
+						맵 애플리케이션(구글 맵, 네이버 맵, 등)을 이용하셔서 최근 마스크를 구매하러 갔던 시설(편의점, 마트, 우체국, 등)의 정확한 위치를 여기에다 입력 해주십시오. Please use applications like Google Maps to accurately obtain the location of the facility you've recently visited (Store, Market, etc), and insert it here. <br> <br>
+						<input type = "text" id = "Address" name = "Address" placeholder = "주소를 입력 해주십시오 Please Enter Address" style = "background: #ECECE8; width: 85vmin; height: 5vmin;"/> <br>
+
+						<br> 이 시설을 방문했을때 마스크를 판매하고 있었는지 여기에 알려주십시오. Were the masks available or unavailable? <br> <br>
+						<select id = "Availability" name = "Availability" style = "font-family: Tahoma, Geneva, sans-serif; font-size: 2vmin; background: #ECECE8; text-indent: 1vmin; width: 20vmin; height: 5vmin; color: #62625C;">
+							<option value = "판매중 Available"> 판매중 Available </option>
+							<option value = "완판 Unavailable"> 완판 Unavailable </option>
+						</select> <br> 
+						<br> 이 시설을 방문했던 시간과 날짜를 여기에다 알려주십시오. When did you visit the facility, approximately? <br> <br>
+						<input type = "text" id = "Month" name = "Month" placeholder = "월 Month eg. 2" style = "background: #ECECE8; width: 25vmin; height: 4.5vmin;"/>
+						<input type = "text" id = "Day" name = "Day" placeholder = "일 Day eg. 27" style = "background: #ECECE8; width: 25vmin; height: 4.5vmin;"/>
+						<input type = "text" id = "Hour" name = "Hour" placeholder = "시 Hour eg. 2pm" style = "background: #ECECE8; width: 25vmin; height: 4.5vmin;"/> <br>
+						<br>
+						<button onclick = "addData()" id = "SubmitButton" style = "font-family: Tahoma, Geneva, sans-serif; background: #A9A7A7; width: 22vmin; height: 3.8vmin;"> 제출 Submit </button>
+					</p>
+				</div>
+				<div class = "Update">
+					<p style = "font-family: Tahoma, Geneva, sans-serif; font-size: 5vmin; color: #CACCD3; padding-top: 2vmin; padding-left: 1vmin;">
+						<strong> 마스크 판매 하는 곳 <span style = "color: #CA768E;">확인</span>하기 <span style = "color: #CA768E;">Check</span> the Facilities With Face Mask in Stock </strong>
+					</p>
+					<p style = "font-family: Tahoma, Geneva, sans-serif; font-size: 3vmin; color :#B3B3AF; padding-top: 2vmin; padding-left: 1vmin;">
+						가장 최근 정보만 보일수 있게 24-48시간마다 데이터를 초기화 하겠습니다. To supply the latest information, the table will be reset every 24-48 hours.
+					</p>
+					<br>
+					<p>
+						<table id = "Table1" style = "border: 1px black; border-collapse: collapse; font-family: Tahoma, Geneva, sans-serif; font-size: 2.4vmin; background: #F9F6F6; text-indent: 1vmin; width: 100%; height: auto; color: #62625C;">
+							<tr>
+								<th> 주소 Address </th>
+								<th> 판매 상태 Availability </th>
+								<th> 방문했던 시간 Time of the Visit </th>
+							</tr>
+						</table>
+					</p>
+				</div>
+				<div class = "Copyright">			
+					<p style = "font-size: 1.5vmin; color: #B3B3AF; padding-top: 5vmin; padding-left: 77vmin;"> Copyright © 2020 CoronaMaskMap Team. All Rights Reserved. </p> </th>
+				</div>
+			</p>
+
+			<script>
+				var arr = new Array();
+
+				function addData()
+				{
+					alert("제출 되었습니다. 대단히 감사합니다. Successfully submitted. Thank you very much.")
+					//localStorage.clear();
+					getData();
+
+					var VarAddress = document.getElementById('Address').value;
+					var VarAvailability = document.getElementById('Availability').value; 
+					var VarTime = document.getElementById('Hour').value + ", " + document.getElementById('Month').value + "월 " + document.getElementById('Day').value +"일, " + document.getElementById('Month').value + "/" + document.getElementById('Day').value;
+					arr.push({VarAddress,VarAvailability,VarTime});
+
+					localStorage.setItem("localDataDaegu",JSON.stringify(arr));
+					showData();
+				}
+
+				function getData()
+				{
+					var str = localStorage.getItem("localDataDaegu");
+					if(str != null)
+					{
+						arr = JSON.parse(str);
+					}
+				}
+
+				function showData()
+				{
+					getData();
+
+					var table = document.getElementById('Table1');
+					var temp = table.rows.length;
+					while(--temp)
+					{
+						table.deleteRow(temp);
+					}
+
+
+					for(var k = 0; k < arr.length; k++)
+					{	
+			     		var row = table.insertRow(1);
+			      		var cell1 = row.insertCell(0);
+			      		var cell2 = row.insertCell(1);
+			      		var cell3 = row.insertCell(2);
+
+			      		cell1.innerHTML = arr[k].VarAddress;
+			      		cell2.innerHTML = arr[k].VarAvailability;
+			      		cell3.innerHTML = arr[k].VarTime;
+			      	}
+				}
+			</script>
+		</body>
+	</form>
+</html>
